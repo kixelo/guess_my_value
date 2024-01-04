@@ -1,1 +1,14 @@
-# guess_my_value
+# Guess my value game
+with this application you can guess values of football players from Slovak first football tier: Niké liga.
+
+## Desktop application that I used for coding part
+```
+PyCharm
+```
+
+## App idea:
+```
+My inspiration was https://www.transfermarkt.com/whatsMyValue, but unfortunately the Slovak league is not included, so therefore I tried to create similar app/ game with Python.
+```
+## App Images:
+<img src="https://github.com/kixelo/english-thesaurus/blob/main/Screenshot%20from%202022-07-08%2021-55-25.png" />
