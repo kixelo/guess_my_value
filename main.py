@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import random
+import time
 
 headers = {'User-Agent':
                'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36'}
@@ -40,51 +41,84 @@ df = pd.DataFrame({"Players": all_players, "Values": all_values})
 #df.to_csv("nike_liga_data.csv", index=True)
 
 def football_player_guess_game():
-    # Randomly select two different indices
-    indices = random.sample(range(len(df)), 2)
-
-    # Display the names and ask for the guess
-    print("Football Player Value Guessing Game:")
     # print(f"1. {df['Players'][indices[0]]}")
     # print(f"2. {df['Players'][indices[1]]}")
     # print(f"1. {df['Values'][indices[0]]}")
     # print(f"2. {df['Values'][indices[1]]}")
 
     # Get user input for the guess
-    user_guess = input(
-        f"{df['Players'][indices[0]]} market value is €{int(df['Values'][indices[0]]) / 1000000}m.\nDoes {df['Players'][indices[1]]} have a HIGHER or LOWER market value than {df['Players'][indices[0]]}?\n Type 'H' for HIGHER and type 'L' for LOWER: ")
+    x = 10
+    success = 0
+    while x > 0:
+        # Randomly select two different indices
+        indices = random.sample(range(len(df)), 2)
 
-    # Check the answer
-    user_guess = user_guess.lower()
-    if user_guess == "h":
-        # final_price = df['Values'][indices[1]] -  df['Values'][indices[0]]
-        if int(df['Values'][indices[1]]) > int(df['Values'][indices[0]]):
-            print(
-                f"Correct! You guessed it right. {df['Players'][indices[1]]} value is €{int(df['Values'][indices[1]]) / 1000000}m.")
+        # Display the names and ask for the guess
+        print(f"Football Player Value Guessing Game, you have {x} attempt(s):")
+        user_guess = input(
+            f"{df['Players'][indices[0]]} market value is €{int(df['Values'][indices[0]]) / 1000000}m.\n Does {df['Players'][indices[1]]} have a HIGHER or LOWER market value than {df['Players'][indices[0]]}?\n  Type 'H' for HIGHER and type 'L' for LOWER: ")
 
-        elif int(df['Values'][indices[1]]) < int(df['Values'][indices[0]]):
-            print(
-                f"Wrong! because {df['Players'][indices[1]]} value is only €{int(df['Values'][indices[1]]) / 1000000}m.")
+        # Check the answer
+        user_guess = user_guess.lower()
+        if user_guess == "h":
+            # final_price = df['Values'][indices[1]] -  df['Values'][indices[0]]
+            if int(df['Values'][indices[1]]) > int(df['Values'][indices[0]]) and not int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+                print(
+                    f"Correct! You guessed it right. {df['Players'][indices[1]]} value is €{int(df['Values'][indices[1]]) / 1000000}m.\n")
+                x -= 1
+                success += 1
+                time.sleep(2)
 
-        elif int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
-            print(
-                f"Values of {df['Players'][indices[0]]} and {int(df['Players'][indices[1]])} are equal: €{int(df['Values'][indices[0]]) / 1000000}m.")
 
-    elif user_guess == "l":
-        if int(df['Values'][indices[0]]) > int(df['Values'][indices[1]]):
-            print(
-                f"Yes you are right, {df['Players'][indices[1]]} value is lower --->>> €{int(df['Values'][indices[1]]) / 1000000}m.")
+            elif int(df['Values'][indices[1]]) < int(df['Values'][indices[0]]) and not int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+                print(
+                    f"Wrong! because {df['Players'][indices[1]]} value is only €{int(df['Values'][indices[1]]) / 1000000}m.\n")
+                x -= 1
+                time.sleep(2)
 
-        elif int(df['Values'][indices[0]]) < int(df['Values'][indices[1]]):
-            print(
-                f"Wrong answer! because {df['Players'][indices[1]]} value is higher --->>> €{int(df['Values'][indices[1]]) / 1000000}m.")
 
-        elif int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
-            print(
-                f"Values of {df['Players'][indices[0]]} and {int(df['Players'][indices[1]])} are equal: €{int(df['Values'][indices[0]]) / 1000000}m.")
+            #elif int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+            #else:
+            #    print(f"Values of {df['Players'][indices[0]]} and {df['Players'][indices[1]]} are equal: €{int(df['Values'][indices[0]]) / 1000000}m.\n")
+            #    x -= 1
+            #    time.sleep(2)
 
+
+
+        elif user_guess == "l":
+            if int(df['Values'][indices[0]]) > int(df['Values'][indices[1]]) and not int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+                print(
+                    f"Yes you are right, {df['Players'][indices[1]]} value is lower --->>> €{int(df['Values'][indices[1]]) / 1000000}m.\n")
+                x -= 1
+                success += 1
+                time.sleep(2)
+
+
+            elif int(df['Values'][indices[0]]) < int(df['Values'][indices[1]]) and not int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+                print(
+                    f"Wrong answer! because {df['Players'][indices[1]]} value is higher --->>> €{int(df['Values'][indices[1]]) / 1000000}m.\n")
+                x -= 1
+                time.sleep(2)
+
+
+
+            #elif int(df['Values'][indices[0]]) == int(df['Values'][indices[1]]):
+            #else:
+            #    print(f"Values of {df['Players'][indices[0]]} and {df['Players'][indices[1]]} are equal: €{int(df['Values'][indices[0]]) / 1000000}m.\n")
+            #    x -= 1
+            #    time.sleep(2)
+
+
+        else:
+            print("I do not understand your query...\n")
+            x -= 1
+            time.sleep(1)
+    if success > 8:
+        print(f"Excellent! You're master of Niké Liga, because your success rate is {success*10}%.")
+    elif success >= 1 and success <= 8:
+        print(f"Not great not terrible... your success rate is {success*10}%.")
     else:
-        print("I do not understand your query...")
+        print(f"You should watch more 'Bavme sa o lige.' magazine... because your success rate is {success*10}%.")
 
 
 # Run the game
