@@ -11,4 +11,4 @@ PyCharm
 My inspiration was https://www.transfermarkt.com/whatsMyValue, but unfortunately the Slovak league is not included, so therefore I tried to create similar app/ game with Python.
 ```
 ## App Images:
-<img src="https://github.com/kixelo/english-thesaurus/blob/main/Screenshot%20from%202022-07-08%2021-55-25.png" />
+<img src="[guessing_game.PNG](https://github.com/kixelo/guess_my_value/blob/main/guessing_game.PNG)https://github.com/kixelo/guess_my_value/blob/main/guessing_game.PNG" />
